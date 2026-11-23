@@ -1,5 +1,5 @@
 ---
-name: "ask"
+name: "asking"
 description: "user asking questions"
 disable-model-invocation: true
 ---
