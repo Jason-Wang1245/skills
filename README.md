@@ -1,13 +1,13 @@
-# skills
+# jstack
 
 The master copy of my agent skills. Each skill is a folder under `skills/` with a `SKILL.md` (standard Agent Skills format), so it works in:
 
 | Harness | Reads from |
 |---|---|
-| Claude Code | `~/.claude/skills` |
-| Codex | `~/.agents/skills` |
-| Copilot CLI / VS Code agent mode | `~/.claude/skills`, `~/.agents/skills` |
-| Claude desktop app | your claude.ai account (upload a zip) |
+| Claude Code | `~/.claude/skills` (symlinks) |
+| Codex | `~/.agents/skills` (symlinks) |
+| Copilot CLI / VS Code agent mode | `~/.claude/skills`, `~/.agents/skills` (symlinks) |
+| Claude desktop app | this repo as a plugin marketplace, installed from GitHub |
 
 ## Setup
 
@@ -23,12 +23,20 @@ This symlinks each skill into `~/.claude/skills` and `~/.agents/skills`. Running
 - **Add a skill:** create `skills/<name>/SKILL.md`, then run `./scripts/link.sh`.
 - **Remove a skill:** delete its folder, then run `./scripts/link.sh --prune`.
 
+For the desktop app, also bump `version` in `.claude-plugin/plugin.json` and push.
+
 ## Claude desktop app
 
-The desktop app loads skills from your claude.ai account, not from local files, so you have to push changes to it by hand:
+The desktop app doesn't read local files. Instead, this repo is a plugin marketplace (`.claude-plugin/marketplace.json`) with one plugin, `jstack`, which contains every skill in `skills/`.
 
-```sh
-./scripts/package.sh <name>   # writes dist/<name>.zip
-```
+1. Push this repo to GitHub.
+2. In the desktop app, add a plugin marketplace from GitHub: `Jason-Wang1245/skills`.
+3. Install the `jstack` plugin.
 
-Then upload the zip under Settings → Capabilities → Skills, replacing the old version.
+To ship changes: bump `version` in `.claude-plugin/plugin.json`, push, then update the marketplace in the app.
+
+Skills installed as a plugin get a namespace prefix (for example `jstack:ask`).
+
+**Don't** install the plugin in Claude Code too: the symlinks already provide the skills, and you'd get every skill twice (`ask` and `jstack:ask`).
+
+Check the manifests with `claude plugin validate .`.
