@@ -1,0 +1,16 @@
+{
+  "name": "jstack",
+  "owner": {
+    "name": "Jason-Wang1245"
+  },
+  "metadata": {
+    "description": "Personal agent skills."
+  },
+  "plugins": [
+    {
+      "name": "jstack",
+      "source": "./",
+      "description": "Personal agent skills: ask, better-phrasing, gif, in-your-own-words, katex, markdown, simplify, simplify-code, summarize."
+    }
+  ]
+}
